@@ -21,14 +21,99 @@ const products = [
     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
     name: "Adults Plain Cotton T-Shirt - 2 Pack",
     rating: {
-    stars: 4.5,
-    count: 56
+      stars: 4.5,
+      count: 56,
     },
-    priceCents: 799
-  }];
+    priceCents: 799,
+  },
+  {
+    image: "images/products/black-2-slot-toaster.jpg",
+    name: "2 Slot Toaster - Black",
+    rating: {
+      stars: 5,
+      count: 2197,
+    },
+    priceCents: 1899,
+  },
+  {
+    image: "images/products/6-piece-white-dinner-plate-set.jpg",
+    name: "6 Piece White Dinner Plate Set",
+    rating: {
+      stars: 4,
+      count: 37,
+    },
+    priceCents: 2067,
+  },
+  {
+    image: "images/products/6-piece-non-stick-baking-set.webp",
+    name: "6-Piece Nonstick, Carbon Steel Oven Bakeware Set",
+    rating: {
+      stars: 4.5,
+      count: 175,
+    },
+    priceCents: 3499,
+  },
+  {
+    image: "images/products/plain-hooded-fleece-sweatshirt-yellow.jpg",
+    name: "Plain Hooded Fleece Sweatshirt",
+    rating: {
+      stars: 4.5,
+      count: 317,
+    },
+    priceCents: 2400,
+  },
+  {
+    image: "images/products/luxury-tower-set-6-piece.jpg",
+    name: "Luxury Towel Set - Graphite Gray",
+    rating: {
+      stars: 4.5,
+      count: 144,
+    },
+    priceCents: 3599,
+  },
+  {
+    image: "images/products/liquid-laundry-detergent-plain.jpg",
+    name: "Liquid Laundry Detergent, 110 Loads, 82.5 Fl Oz",
+    rating: {
+      stars: 4.5,
+      count: 305,
+    },
+    priceCents: 2899,
+  },
+  {
+    image: "images/products/knit-athletic-sneakers-gray.jpg",
+    name: "Waterproof Knit Athletic Sneakers - Gray",
+    rating: {
+      stars: 4,
+      count: 89,
+    },
+    priceCents: 3390,
+  },
+  {
+    image: "images/products/women-chiffon-beachwear-coverup-black.jpg",
+    name: "Women's Chiffon Beachwear Cover Up - Black",
+    rating: {
+      stars: 4.5,
+      count: 235,
+    },
+    priceCents: 2070,
+  },
+  {
+    image: "images/products/round-sunglasses-black.jpg",
+    name: "Round Sunglasses",
+    rating: {
+      stars: 4.5,
+      count: 30,
+    },
+    priceCents: 1560,
+  },
+];
 
-  products.forEach((product) => {
-const html = `  
+  
+let productsHTML = "";
+
+products.forEach((product) => {
+  productsHTML += `  
            <div class="product-container">
           <div class="product-image-container">
             <img
@@ -46,10 +131,14 @@ const html = `
               class="product-rating-stars"
               src="images/ratings/rating-${product.rating.stars * 10}.png"
             />
-            <div class="product-rating-count link-primary">${product.rating.count}</div>
+            <div class="product-rating-count link-primary">${
+              product.rating.count
+            }</div>
           </div>
 
-          <div class="product-price">$${product.priceCents / 100}</div>
+          <div class="product-price">$${(product.priceCents / 100).toFixed(
+            2
+          )}</div>
 
           <div class="product-quantity-container">
             <select>
@@ -75,6 +164,8 @@ const html = `
 
           <button class="add-to-cart-button button-primary">Add to Cart</button>
         </div>`;
+});
 
-        console.log(html);
-  });
+console.log(productsHTML);
+
+document.querySelector(".js-products-grid").innerHTML = productsHTML;
