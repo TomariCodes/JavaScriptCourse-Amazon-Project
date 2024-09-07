@@ -8,6 +8,7 @@ import {
   deliveryOptions,
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 /*hello();
 const today = dayjs();
@@ -115,7 +116,7 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
       removeFromCart(productId);
-
+renderPaymentSummary();
       const container = document.querySelector(
         `.js-cart-item-container-${productId}`
       );
@@ -128,6 +129,7 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
       const { productId, deliveryOptionId } = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     });
   });
 }
