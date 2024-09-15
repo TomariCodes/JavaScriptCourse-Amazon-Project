@@ -1,3 +1,8 @@
+function Cart () {
+   
+}
+
+
 const cart = {
   cartItems: undefined,
   loadFromStorage() {
@@ -85,3 +90,8 @@ const cart = {
 };
 
 cart.loadFromStorage();
+
+businessCart.loadFromStorage();
+
+console.log(cart);
+console.log(businessCart);
