@@ -6,14 +6,20 @@ import { loadProducts } from "../data/products.js";
 //import "../data/backend-practice.js";
 //promises are built in classes
 new Promise((resolve) => {
+
   loadProducts(() => {
+    
 resolve();
   });
 }).then(() => {
-console.log('next step');
+  renderOrderSummary();
+  renderPaymentSummary();
 });
 
+
+/*
 loadProducts(() => {
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
