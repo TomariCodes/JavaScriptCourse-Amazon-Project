@@ -102,13 +102,9 @@ console.log("Unexpected error. Please try again later.");
 
 loadProductsFetch();
 
-loadProductsFetch().then(() => {
-  console.log("next step");
-});
-
 export let products = [];
 
-export function loadProducts() {
+export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener("load", () => {
@@ -120,7 +116,8 @@ export function loadProducts() {
     });
 
     console.log("load products");
-  
+
+    fun();
   });
 
   xhr.addEventListener("error", (error) => {
@@ -131,7 +128,6 @@ export function loadProducts() {
   xhr.send();
 }
 
-loadProducts();
 /*
 
 export const products = [
