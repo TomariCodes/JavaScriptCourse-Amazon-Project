@@ -108,7 +108,7 @@ loadProductsFetch().then(() => {
 
 export let products = [];
 
-export function loadProducts(fun) {
+export function loadProducts() {
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener("load", () => {
@@ -120,7 +120,7 @@ export function loadProducts(fun) {
     });
 
     console.log("load products");
-    fun();
+  
   });
 
   xhr.addEventListener("error", (error) => {
