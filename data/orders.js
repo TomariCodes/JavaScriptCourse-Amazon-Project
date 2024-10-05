@@ -3,14 +3,13 @@ import {Product, products, loadProducts, getProduct, loadProductsFetch} from '..
 import { formatCurrency } from "../scripts/utils/money.js";
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
-
+loadProductsFetch();
 
 export function addOrder(order) {
 orders.unshift(order);
 saveToStorage();
 };
 
-//console.log(order);
 
 function saveToStorage() {
     localStorage.setItem('orders', JSON.stringify(orders));
@@ -19,23 +18,73 @@ console.log(orders);
 
 
 orders.forEach((order) => {
+
+console.log(`Order ID: ${order.id}`);
+
+order.products.forEach((product) => {
+console.log(`Products Object:`, product);
+console.log(`Product Id: ${product.productId}`);
+const foundProduct = getProduct(product.productId);
+if (foundProduct) {
+  console.log(`Found Product:`, foundProduct);
+} else {
+  console.log(`Product with ID ${product.productId} not found in products array.`);
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+  /*
   let renderOrdersHTML = ``;
   const orderedProducts = order.products;
   orderedProducts.forEach ((product) => {
 
-const elements = document.getElementsByClassName('Product');
+console.log(product.productId);
+console.log(Product.id);
 
-console.log(Product.productId);
+console.log(product.productId === Product.id);
 
-/*  const matchingProduct = getProduct(product.productId);
-if (matchingProduct === product.productId) {
 
-}
   });
 
-*/
+  */
 });
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function renderOrderHTML() {
 

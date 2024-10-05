@@ -1,4 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
+
+
 export function getProduct(productId) {
   let matchingProduct;
 
@@ -8,6 +10,10 @@ export function getProduct(productId) {
     }
   });
 
+
+  if (!matchingProduct) {
+    console.error(`No product found with an ID ${productId}`);
+  }
   return matchingProduct;
 }
 export class Product {
