@@ -22,7 +22,7 @@ orders.forEach((order) => {
   const orderDate = dayjs(order.orderTime);
   const orderDateFormat = orderDate.format('MMMM M');
 
-  orderDetails = `<div class="order-container-${order.id}">
+  orderDetails += `<div class="order-container-${order.id}">
     <div class="order-header">
     <div class="order-header-left-section">
               <div class="order-date">
@@ -39,18 +39,17 @@ orders.forEach((order) => {
               <div class="order-header-label">Order ID:</div>
               <div>${order.id}</div>
               </div>
-              </div>
-              
-              <div class="order-details-grid js-order-details-grid">`;
-  
-  order.products.forEach((product) => {
+              </div>`;
+         
+order.products.forEach((product) => {
   const estimatedDeliveryDate = dayjs(product.estimatedDeliveryDate);
   const estimatedDeliveryDateFormat = estimatedDeliveryDate.format('MMMM M');
-
-  const foundProduct = getProduct(product.productId);
   let orderedProducts = ``;
+
+  
+  const foundProduct = getProduct(product.productId);
   if (foundProduct) {
-    orderedProducts = `<div class="product-image-container">
+    orderedProducts += `<div class="product-image-container">
             <img src="${foundProduct.image}" />
             </div>
             
@@ -69,13 +68,24 @@ orders.forEach((order) => {
               <div class="product-actions">
               <a href="tracking.html">
                 <button class="track-package-button button-secondary">
-                  Track package
-                  </button>
+                Track package
+                </button>
                 </a>
-                </div>`; 
-                
-                } 
-  });
+                </div>
+                `; 
+               
+               orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
 
-});
+              } 
+              
+              
+            });
+            
 
+            document.querySelector('.js-orders-grid').innerHTML = orderDetails;
+
+            
+          });
+          
+          
+           
