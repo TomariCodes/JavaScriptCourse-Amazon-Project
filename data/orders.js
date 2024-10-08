@@ -1,26 +1,33 @@
-import { loadFromStorage, cart, loadCart } from "./cart.js";
-import {Product, products, loadProducts, getProduct, loadProductsFetch} from '../data/products.js'
+import {
+  getProduct,
+  loadProductsFetch,
+} from "../data/products.js";
+import {
+  deliveryOptions,
+  getDeliveryOption,
+} from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../scripts/utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-export const orders = JSON.parse(localStorage.getItem('orders')) || [];
+export const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 await loadProductsFetch();
 
+console.log(orders);
+
 export function addOrder(order) {
-orders.unshift(order);
-saveToStorage();
-};
+  orders.unshift(order);
+  saveToStorage();
+}
 
 function saveToStorage() {
-    localStorage.setItem('orders', JSON.stringify(orders));
+  localStorage.setItem("orders", JSON.stringify(orders));
 }
 
 let orderDetails = ``;
 
-
 orders.forEach((order) => {
   const orderDate = dayjs(order.orderTime);
-  const orderDateFormat = orderDate.format('MMMM M');
+  const orderDateFormat = orderDate.format("MMMM D");
 
   orderDetails += `<div class="order-container-${order.id}">
     <div class="order-header">
@@ -40,16 +47,19 @@ orders.forEach((order) => {
               <div>${order.id}</div>
               </div>
               </div>`;
-         
-order.products.forEach((product) => {
-  const estimatedDeliveryDate = dayjs(product.estimatedDeliveryDate);
-  const estimatedDeliveryDateFormat = estimatedDeliveryDate.format('MMMM M');
-  let orderedProducts = ``;
 
-  
-  const foundProduct = getProduct(product.productId);
-  if (foundProduct) {
-    orderedProducts += `<div class="product-image-container">
+  order.products.forEach((product) => {
+    let orderedProducts = ``;
+    
+    const foundProduct = getProduct(product.productId);
+    if (foundProduct) {
+      
+      const delivDate = getDeliveryOption();
+      console.log(delivDate);
+      const estimatedDeliveryDate = orderDate.add(delivDate.deliveryDays, "days");
+      const estimatedDeliveryDateFormat = estimatedDeliveryDate.format("MMMM D");
+      
+      orderedProducts += `<div class="product-image-container">
             <img src="${foundProduct.image}" />
             </div>
             
@@ -72,20 +82,22 @@ order.products.forEach((product) => {
                 </button>
                 </a>
                 </div>
-                `; 
-               
-               orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
+                `;
 
-              } 
-              
-              
-            });
-            
+      orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
+    }
+  });
 
-            document.querySelector('.js-orders-grid').innerHTML = orderDetails;
+const ordersGrid = document.querySelector(".js-orders-grid");
 
-            
-          });
-          
-          
-           
+if (ordersGrid) {
+ordersGrid.innerHTML = orderDetails;
+} else {
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".js-orders-grid").innerHTML = orderDetails;
+});
+}
+
+
+
+});
