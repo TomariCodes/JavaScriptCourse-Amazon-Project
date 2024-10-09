@@ -3,8 +3,7 @@ import {
   loadProductsFetch,
 } from "../data/products.js";
 import {
-  deliveryOptions,
-  getDeliveryOption,
+  getDeliveryOption
 } from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../scripts/utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
@@ -53,12 +52,15 @@ orders.forEach((order) => {
     
     const foundProduct = getProduct(product.productId);
     if (foundProduct) {
-      
-      const delivDate = getDeliveryOption();
-      console.log(delivDate);
-      const estimatedDeliveryDate = orderDate.add(delivDate.deliveryDays, "days");
-      const estimatedDeliveryDateFormat = estimatedDeliveryDate.format("MMMM D");
-      
+      // console.log(foundProduct);
+       // const delivDate = getDeliveryOption(foundProduct);
+      // console.log(delivDate);
+      // const estimatedDeliveryDate = orderDate.add(delivDate.deliveryDays, "days");
+      // const estimatedDeliveryDateFormat = estimatedDeliveryDate.format("MMMM D");
+       const estimatedDeliveryDate = dayjs(product.estimatedDeliveryDate);
+       const estimatedDeliveryDateFormat = estimatedDeliveryDate.format('MMMM D')
+
+
       orderedProducts += `<div class="product-image-container">
             <img src="${foundProduct.image}" />
             </div>
