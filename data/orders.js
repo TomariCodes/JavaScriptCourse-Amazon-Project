@@ -1,7 +1,7 @@
 import {
   getProduct,
   loadProductsFetch,
-} from "../data/products.js";
+} from "./products.js";
 import {
   getDeliveryOption
 } from "../../data/deliveryOptions.js";
@@ -52,14 +52,9 @@ orders.forEach((order) => {
     
     const foundProduct = getProduct(product.productId);
     if (foundProduct) {
-      // console.log(foundProduct);
-       // const delivDate = getDeliveryOption(foundProduct);
-      // console.log(delivDate);
-      // const estimatedDeliveryDate = orderDate.add(delivDate.deliveryDays, "days");
-      // const estimatedDeliveryDateFormat = estimatedDeliveryDate.format("MMMM D");
-       const estimatedDeliveryDate = dayjs(product.estimatedDeliveryDate);
-       const estimatedDeliveryDateFormat = estimatedDeliveryDate.format('MMMM D')
-
+      console.log(product.productId)
+        const delivDate = dayjs(product.estimatedDeliveryTime);
+       const delivDateFormat = delivDate.format('MMMM D');
 
       orderedProducts += `<div class="product-image-container">
             <img src="${foundProduct.image}" />
@@ -69,7 +64,7 @@ orders.forEach((order) => {
               <div class="product-name">
                 ${foundProduct.name}
                 </div>
-              <div class="product-delivery-date">Arriving on: ${estimatedDeliveryDateFormat} </div>
+              <div class="product-delivery-date">Arriving on: ${delivDateFormat} </div>
               <div class="product-quantity">Quantity: ${product.quantity}</div>
               <button class="buy-again-button button-primary">
               <img class="buy-again-icon" src="images/icons/buy-again.png" />
