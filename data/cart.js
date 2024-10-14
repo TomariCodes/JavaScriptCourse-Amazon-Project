@@ -41,6 +41,8 @@ export function addToCart(productId) {
       deliveryOptionId: "1",
     });
   }
+
+  console.log('A new product was added to the cart');
   saveToStorage();
 }
 
@@ -76,7 +78,6 @@ export function loadCart(fun) {
 
   xhr.addEventListener("load", () => {
 
-console.log(xhr.response);
     fun(); 
   });
 

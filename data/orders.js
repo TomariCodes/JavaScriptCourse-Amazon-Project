@@ -2,16 +2,12 @@ import {
   getProduct,
   loadProductsFetch,
 } from "./products.js";
-import {
-  getDeliveryOption
-} from "../../data/deliveryOptions.js";
 import { formatCurrency } from "../scripts/utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import { addToCart } from "./cart.js";
 export const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 await loadProductsFetch();
-
-console.log(orders);
 
 export function addOrder(order) {
   orders.unshift(order);
@@ -61,7 +57,6 @@ const trackingLink = `<button class="track-package-button button-secondary"><a h
 
   const foundProduct = getProduct(product.productId);
   if (foundProduct) {
-    console.log(product.productId);
     const delivDate = dayjs(product.estimatedDeliveryTime);
     const delivDateFormat = delivDate.format("MMMM D");
 
@@ -75,9 +70,11 @@ const trackingLink = `<button class="track-package-button button-secondary"><a h
                 </div>
               <div class="product-delivery-date">Arriving on: ${delivDateFormat} </div>
               <div class="product-quantity">Quantity: ${product.quantity}</div>
-              <button class="buy-again-button button-primary">
+              <button class="buy-again-button button-primary js-buy-again"
+              data-product-id="${product.productId}">
               <img class="buy-again-icon" src="images/icons/buy-again.png" />
-              <span class="buy-again-message">Buy it again</span>
+              <a href="/checkout.html" class="buy-again-link"> 
+              <span class="buy-again-message">Buy it again</span></a>
               </button>
               </div>
               
@@ -87,15 +84,45 @@ const trackingLink = `<button class="track-package-button button-secondary"><a h
                 `;
 
     orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
+
   }
+  
 });
+
+console.log(addToCart);
+
 const ordersGrid = document.querySelector(".js-orders-grid");
 
 if (ordersGrid) {
 ordersGrid.innerHTML = orderDetails;
 } else {
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".js-orders-grid").innerHTML = orderDetails;
-});
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".js-orders-grid").innerHTML = orderDetails;
+  });
 }});
 
+
+
+
+/*
+    const buyAgainButtons = document.querySelectorAll(".js-buy-again");
+    console.log(buyAgainButtons);
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".js-buy-again").forEach((button) => {
+        button.addEventListener("click", () => {
+          const repurchasedProduct = this.dataset.productId;
+          console.log(repurchasedProduct);
+    
+          if (repurchasedProduct) {
+            const repurchasedProductInfo = getProduct(repurchasedProduct);
+            console.log(`Product ID: ${repurchasedProductInfo}`);
+            addToCart(repurchasedProductInfo);
+            console.log("Product added to cart");
+          } else {
+            console.error("Product ID not found for this button");
+          }
+        });
+      });
+    });
+
+    */
