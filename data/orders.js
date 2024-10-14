@@ -47,16 +47,25 @@ orders.forEach((order) => {
               </div>
               </div>`;
 
-  order.products.forEach((product) => {
-    let orderedProducts = ``;
-    
-    const foundProduct = getProduct(product.productId);
-    if (foundProduct) {
-      console.log(product.productId)
-        const delivDate = dayjs(product.estimatedDeliveryTime);
-       const delivDateFormat = delivDate.format('MMMM D');
+order.products.forEach((product) => {
+const orderId = order.id;
+const productId = product.productId;
 
-      orderedProducts += `<div class="product-image-container">
+const trackingUrl = new URL('/tracking.html', window.location.href);
+trackingUrl.searchParams.set('orderId', orderId);
+trackingUrl.searchParams.set('productId', productId);
+
+const trackingLink = `<button class="track-package-button button-secondary"><a href="${trackingUrl.toString()}" class="track-package-link">Track Package</a></button>`; 
+
+  let orderedProducts = ``;
+
+  const foundProduct = getProduct(product.productId);
+  if (foundProduct) {
+    console.log(product.productId);
+    const delivDate = dayjs(product.estimatedDeliveryTime);
+    const delivDateFormat = delivDate.format("MMMM D");
+
+    orderedProducts += `<div class="product-image-container">
             <img src="${foundProduct.image}" />
             </div>
             
@@ -73,18 +82,13 @@ orders.forEach((order) => {
               </div>
               
               <div class="product-actions">
-              <a href="tracking.html">
-                <button class="track-package-button button-secondary">
-                Track package
-                </button>
-                </a>
+              ${trackingLink}
                 </div>
                 `;
 
-      orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
-    }
-  });
-
+    orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
+  }
+});
 const ordersGrid = document.querySelector(".js-orders-grid");
 
 if (ordersGrid) {
@@ -93,8 +97,5 @@ ordersGrid.innerHTML = orderDetails;
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".js-orders-grid").innerHTML = orderDetails;
 });
-}
+}});
 
-
-
-});

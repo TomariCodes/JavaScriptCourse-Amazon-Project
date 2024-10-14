@@ -2,12 +2,12 @@ import { loadProductsFetch, getProduct } from "./products.js";
 import { orders } from "./orders.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
 
-const url = new URL(window.location.href);
+const urlParams = new URLSearchParams(window.location.search);
 
-console.log(url.searchParams.get("orderId"));
-const urlOrderId = url.searchParams.get("orderId");
-console.log(url.searchParams.get("productId"));
-const urlProduct = url.searchParams.get("productId");
+console.log(urlParams.get('orderId'));
+const urlOrderId = urlParams.get("orderId");
+console.log(urlParams.get("productId"));
+const urlProduct = urlParams.get("productId");
 
 await loadProductsFetch();
 let trackingHTML = ``;
@@ -19,9 +19,9 @@ orders.forEach((order) => {
       if (product.productId = urlProduct) {
         const productInfo = getProduct(product.productId);
         console.log(productInfo);
-        const arrivialDate = dayjs(product.estimatedDeliveryTime);
-        const arrivingOn = arrivialDate.format("dddd, MMMM D");
-        
+        const arrivalDate = dayjs(product.estimatedDeliveryTime);
+        const arrivingOn = arrivalDate.format("dddd, MMMM D");
+        console.log(arrivalDate);
 
         trackingHTML = ` <div class="delivery-date">
             Arriving on ${arrivingOn}
