@@ -74,14 +74,15 @@ const trackingLink = `<button class="track-package-button button-secondary"><a h
               data-product-id="${product.productId}">
               <img class="buy-again-icon" src="images/icons/buy-again.png" />
               <a href="/checkout.html" class="buy-again-link"> 
-              <span class="buy-again-message">Buy it again</span></a>
+              <span class="buy-again-message">Buy it again</span>
+              </a>
               </button>
               </div>
               
               <div class="product-actions">
               ${trackingLink}
-                </div>
-                `;
+              </div>
+              `;
 
     orderDetails += `<div class="order-details-grid js-order-details-grid">${orderedProducts}</div>`;
 
@@ -101,21 +102,14 @@ ordersGrid.innerHTML = orderDetails;
   });
 }});
 
-
-
-
-/*
-    const buyAgainButtons = document.querySelectorAll(".js-buy-again");
-    console.log(buyAgainButtons);
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".js-buy-again").forEach((button) => {
+document.querySelectorAll(".js-buy-again").forEach((button) => {
         button.addEventListener("click", () => {
+          console.log('button clicked')
           const repurchasedProduct = this.dataset.productId;
-          console.log(repurchasedProduct);
-    
+          console.log("Product ID: ", repurchasedProduct);
           if (repurchasedProduct) {
             const repurchasedProductInfo = getProduct(repurchasedProduct);
-            console.log(`Product ID: ${repurchasedProductInfo}`);
+            console.log(`Product Info: ${repurchasedProductInfo}`);
             addToCart(repurchasedProductInfo);
             console.log("Product added to cart");
           } else {
@@ -123,6 +117,17 @@ ordersGrid.innerHTML = orderDetails;
           }
         });
       });
-    });
 
-    */
+/*
+
+    const buyAgainButtons = document.querySelectorAll(".js-buy-again");
+
+    if (buyAgainButtons) {
+      // console.log(buyAgainButtons);
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log('DOM LOADED');
+    });
+  }
+
+
+  */
