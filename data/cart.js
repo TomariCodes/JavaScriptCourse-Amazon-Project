@@ -42,7 +42,6 @@ export function addToCart(productId) {
     });
   }
 
-  console.log('A new product was added to the cart');
   saveToStorage();
 }
 

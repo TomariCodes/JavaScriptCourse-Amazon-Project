@@ -90,7 +90,6 @@ const trackingLink = `<button class="track-package-button button-secondary"><a h
   
 });
 
-console.log(orderDetails);
 
 const ordersGrid = document.querySelector(".js-orders-grid");
 
@@ -105,7 +104,6 @@ if (ordersGrid) {
 function attachBuyAgainListeners() {
   const buyAgainButtons = document.querySelectorAll(".js-buy-again");
   if (buyAgainButtons) {
-       console.log(buyAgainButtons);
 buyAgainButtons.forEach((button, index) => {
 const productId = button.dataset.productId;
 
@@ -115,29 +113,21 @@ if (!productId) {
   return;
 }
 
-console.log(`Attaching listener to button with Product ID: ${productId}`)
-
  const newButton = button.cloneNode(true);
 button.replaceWith(newButton);
-        newButton.addEventListener("click", (event) => {
-  console.log('button clicked');
-  const repurchasedProduct = event.target.dataset.productId;
-console.log(`Button with Product ID ${repurchasedProduct} clicked - Event Count: ${newButton.eventListenerCount}`)
-  if (repurchasedProduct) {
-    const repurchasedProductInfo = getProduct(repurchasedProduct);
-            console.log(`Product Info: ${repurchasedProductInfo}`);
-            addToCart(productId);
-            console.log("Product added to cart");
+        newButton.addEventListener("click", () => {
+  const repurchasedProductId = newButton.dataset.productId;
+  if (newButton) {
+    const repurchasedProductInfo = JSON.stringify(getProduct(repurchasedProductId));
+    console.log(repurchasedProductInfo);
+            addToCart(repurchasedProductInfo);
           } else {
             console.error("Product ID not found for this button");
           }
         });
       });
     }
-
-    console.log(buyAgainButtons.length)
   }
-
 
 /*
 
@@ -152,4 +142,4 @@ console.log(`Button with Product ID ${repurchasedProduct} clicked - Event Count:
 
   */
 
-attachBuyAgainListeners()
+attachBuyAgainListeners();
