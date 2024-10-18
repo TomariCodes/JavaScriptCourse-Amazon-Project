@@ -10,13 +10,26 @@ import {
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 
+
 export function renderOrderSummary() {
-  let cartSummaryHTML = "";
+  let cartSummaryHTML = ``;
+
+console.log(cart);
 
   cart.forEach((cartItem) => {
-    const productId = cartItem.productId;
+    console.log(cartItem);
+    const cartItemProductId = typeof cartItem.productId === 'object' ? cartItem.productId.id : cartItem.productId;
 
-    const matchingProduct = getProduct(productId);
+if (!cartItemProductId) {
+console.error('Missing productId for cart item:', cartItem);
+return;
+}
+
+
+    console.log(cartItemProductId);
+
+
+    const matchingProduct = getProduct(cartItemProductId);
 
     const deliveryOptionId = cartItem.deliveryOptionId;
 

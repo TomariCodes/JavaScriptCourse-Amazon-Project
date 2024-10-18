@@ -120,7 +120,7 @@ button.replaceWith(newButton);
   if (newButton) {
     const repurchasedProductInfo = JSON.stringify(getProduct(repurchasedProductId));
     console.log(repurchasedProductInfo);
-            addToCart(repurchasedProductInfo);
+            addToCart(repurchasedProductId);
           } else {
             console.error("Product ID not found for this button");
           }
