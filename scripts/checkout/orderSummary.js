@@ -144,42 +144,43 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
   });
 }
 renderPaymentSummary();
-  renderOrderSummary();
+renderOrderSummary();
 
   
   document.querySelectorAll('.js-update-link').forEach((span) => {
     const updateLink = document.querySelector(".js-update-link");
     console.log(updateLink);
     if (updateLink) {
-
-      span.addEventListener('click', function() {
+      span.addEventListener("click", function () {
         console.log(this);
-    const currentQuantity = this.previousElementSibling.textContent.trim();
-    const inputElement = document.createElement('input');
-    inputElement.type = 'number';
-    inputElement.value = currentQuantity;
-    inputElement.classList.add('quantity-input');
-
-    this.parentNodeparentNode.replaceChild(inputElement, this);
-
-
-    inputElement.addEventListener('blur', () => {
-const newQuantity = this.value;
-
-
-const newSpan = document.createElement('span');
-newSpan.classList.add('update-quantity-link', 'link-primary', 'js-update-link');
-newSpan.textContent('Update');
-
-this.parentNode.replaceChild(newSpan, this);
-
-console.log('Updated quantity to:', newQuantity);
-
-newSpan.addEventListener('click', () => {
-span.click();
+        
+        const currentQuantity = this.previousElementSibling.textContent.trim();
+        console.log(currentQuantity);
+        const inputElement = document.createElement('input');
+        inputElement.type = 'number';
+        inputElement.value = currentQuantity;
+        inputElement.classList.add('quantity-input');
+        
+        this.parentNode.replaceChild(inputElement, this);
+        
+        
+        inputElement.addEventListener("blur", function() {
+          const newQuantity = this.value;
+          console.log('Quantity:', newQuantity);
+          const newSpan = document.createElement('span');
+          newSpan.classList.add('update-quantity-link', 'link-primary', 'js-update-link');
+          console.log(newSpan);
+          newSpan.textContent = 'Update';
+          
+          this.parentNode.replaceChild(newSpan, this);
+          
+          console.log('Updated quantity to:', newQuantity);
+        });
       });
-    });
-  });
+        
+          newSpan.addEventListener('click', function() {
+            span.click();
+   });
 }});
 
 
