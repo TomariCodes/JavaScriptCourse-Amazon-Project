@@ -10,24 +10,19 @@ import {
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 
-
 export function renderOrderSummary() {
   let cartSummaryHTML = ``;
 
-console.log(cart);
+  cart.forEach((cartItem) => { 
+    const cartItemProductId =
+      typeof cartItem.productId === "object"
+        ? cartItem.productId.id
+        : cartItem.productId;
 
-  cart.forEach((cartItem) => {
-    console.log(cartItem);
-    const cartItemProductId = typeof cartItem.productId === 'object' ? cartItem.productId.id : cartItem.productId;
-
-if (!cartItemProductId) {
-console.error('Missing productId for cart item:', cartItem);
-return;
-}
-
-
-    console.log(cartItemProductId);
-
+    if (!cartItemProductId) {
+      console.error("Missing productId for cart item:", cartItem);
+      return;
+    }
 
     const matchingProduct = getProduct(cartItemProductId);
 
@@ -65,7 +60,7 @@ return;
                   cartItem.quantity
                 }</span>
                   </span>
-                  <span class="update-quantity-link link-primary">
+                  <span class="update-quantity-link link-primary js-update-link">
                     Update
                   </span>
                   <span  
@@ -89,6 +84,8 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
     `;
   });
 
+  
+  
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
     deliveryOptions.forEach((deliveryOption) => {
@@ -146,3 +143,64 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
     });
   });
 }
+renderPaymentSummary();
+  renderOrderSummary();
+
+  
+  document.querySelectorAll('.js-update-link').forEach((span) => {
+    const updateLink = document.querySelector(".js-update-link");
+    console.log(updateLink);
+    if (updateLink) {
+
+      span.addEventListener('click', function() {
+        console.log(this);
+    const currentQuantity = this.previousElementSibling.textContent.trim();
+    const inputElement = document.createElement('input');
+    inputElement.type = 'number';
+    inputElement.value = currentQuantity;
+    inputElement.classList.add('quantity-input');
+
+    this.parentNodeparentNode.replaceChild(inputElement, this);
+
+
+    inputElement.addEventListener('blur', () => {
+const newQuantity = this.value;
+
+
+const newSpan = document.createElement('span');
+newSpan.classList.add('update-quantity-link', 'link-primary', 'js-update-link');
+newSpan.textContent('Update');
+
+this.parentNode.replaceChild(newSpan, this);
+
+console.log('Updated quantity to:', newQuantity);
+
+newSpan.addEventListener('click', () => {
+span.click();
+      });
+    });
+  });
+}});
+
+
+
+
+
+
+/*
+
+Plan:
+
+When you press update you have to get the product's id obviously.
+change the span into an input.
+get the value out of the input and make sure it's a number not a string.
+change the quantity from whatever it is to that value.
+
+
+add data-product-ids to every button and js classes.
+generate a little html using eventListener.
+use the query selector to get the value out of the input and Number() to change it into a number.
+cartItem.quantity = value;
+and then change it in the html as well.
+
+*/
