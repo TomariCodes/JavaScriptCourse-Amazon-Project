@@ -145,9 +145,8 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
 }
 renderPaymentSummary();
 renderOrderSummary();
-
   
-  document.querySelectorAll('.js-update-link').forEach((span) => {
+   document.querySelectorAll('.js-update-link').forEach((span) => {
     const updateLink = document.querySelector(".js-update-link");
     console.log(updateLink);
     if (updateLink) {
@@ -177,7 +176,6 @@ renderOrderSummary();
           console.log('Updated quantity to:', newQuantity);
         });
       });
-        
           newSpan.addEventListener('click', function() {
             span.click();
    });
