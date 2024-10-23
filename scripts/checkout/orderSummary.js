@@ -148,7 +148,6 @@ renderOrderSummary();
   
    document.querySelectorAll('.js-update-link').forEach((span) => {
     const updateLink = document.querySelector(".js-update-link");
-    console.log(updateLink);
     if (updateLink) {
       span.addEventListener("click", function () {
         console.log(this);
@@ -166,19 +165,25 @@ renderOrderSummary();
         inputElement.addEventListener("blur", function() {
           const newQuantity = this.value;
           console.log('Quantity:', newQuantity);
+
+
           const newSpan = document.createElement('span');
           newSpan.classList.add('update-quantity-link', 'link-primary', 'js-update-link');
-          console.log(newSpan);
           newSpan.textContent = 'Update';
+          console.log(newSpan);
           
-          this.parentNode.replaceChild(newSpan, this);
+          newSpan.addEventListener('click', function() {
+                console.log('Updated quantity to:', newQuantity);
+                // span.click();
+              });
+              
+              this.parentNode.replaceChild(newSpan, this);
+              
+              console.log('Updated quantity to:', newQuantity);
           
-          console.log('Updated quantity to:', newQuantity);
+          console.log(this);
         });
       });
-          newSpan.addEventListener('click', function() {
-            span.click();
-   });
 }});
 
 
