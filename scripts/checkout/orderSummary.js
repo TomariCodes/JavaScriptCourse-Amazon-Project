@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
+import { cart, removeFromCart, updateCartQuantity, updateDeliveryOption } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { hello } from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js";
@@ -12,6 +12,7 @@ import { renderPaymentSummary } from "./paymentSummary.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = ``;
+
 
   cart.forEach((cartItem) => { 
     const cartItemProductId =
@@ -56,13 +57,25 @@ export function renderOrderSummary() {
                   matchingProduct.id
                 }">
                 <span>
-                Quantity: <span class="quantity-label">${
-                  cartItem.quantity
-                }</span>
+                Quantity: <span class="quantity-label js-quantity-label 
+                js-quantity-label-${matchingProduct.id}">${
+      cartItem.quantity
+    }</span>
                   </span>
-                  <span class="update-quantity-link link-primary js-update-link">
+                  <span class="update-quantity-link link-primary js-update-link" 
+                  data-product-id="${matchingProduct.id}">
                     Update
                   </span>
+                  <input type="number"
+                  min="1"
+                  max="10"
+                   class="quantity-input js-quantity-input-${
+                     matchingProduct.id
+                   }">
+                  <span class="save-quantity-link link-primary 
+                  js-save-quantity-link"
+                  data-product-id="${matchingProduct.id}"
+                  >Save</span>
                   <span  
                   class="delete-quantity-link link-primary 
                   js-delete-link 
@@ -81,10 +94,10 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
 </div>
                 </div>
                 </div>
-    `;
+                `;
+
   });
 
-  
   
   function deliveryOptionsHTML(matchingProduct, cartItem) {
     let html = "";
@@ -121,6 +134,26 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
 
   document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
+  document.querySelectorAll('.js-update-link').forEach((updateLink) => {
+const updatedProduct = updateLink.dataset.productId;
+updateLink.addEventListener('click', () => {
+ document
+   .querySelector(`.js-cart-item-container-${updatedProduct}`).classList.add("is-editing-quantity");
+});
+  });
+
+document.querySelectorAll(".js-save-quantity-link").forEach((saveLink) => {
+  const savedProduct = saveLink.dataset.productId;
+  saveLink.addEventListener("click", () => {
+const newQuantity = Number(document.querySelector(`.js-quantity-input-${savedProduct}`).value);
+    document
+      .querySelector(`.js-cart-item-container-${savedProduct}`).classList.remove("is-editing-quantity");
+
+      document.querySelector(`.js-quantity-label-${savedProduct}`).innerText = newQuantity;
+    });
+});
+
+
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       const productId = link.dataset.productId;
@@ -143,68 +176,3 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
     });
   });
 }
-renderPaymentSummary();
-renderOrderSummary();
-  
-   document.querySelectorAll('.js-update-link').forEach((span) => {
-    const updateLink = document.querySelector(".js-update-link");
-    if (updateLink) {
-      span.addEventListener("click", function () {
-        console.log(this);
-        
-        const currentQuantity = this.previousElementSibling.textContent.trim();
-        console.log(currentQuantity);
-        const inputElement = document.createElement('input');
-        inputElement.type = 'number';
-        inputElement.value = currentQuantity;
-        inputElement.classList.add('quantity-input');
-        
-        this.parentNode.replaceChild(inputElement, this);
-        
-        
-        inputElement.addEventListener("blur", function() {
-          const newQuantity = this.value;
-          console.log('Quantity:', newQuantity);
-
-
-          const newSpan = document.createElement('span');
-          newSpan.classList.add('update-quantity-link', 'link-primary', 'js-update-link');
-          newSpan.textContent = 'Update';
-          console.log(newSpan);
-          
-          newSpan.addEventListener('click', function() {
-                console.log('Updated quantity to:', newQuantity);
-                // span.click();
-              });
-              
-              this.parentNode.replaceChild(newSpan, this);
-              
-              console.log('Updated quantity to:', newQuantity);
-          
-          console.log(this);
-        });
-      });
-}});
-
-
-
-
-
-
-/*
-
-Plan:
-
-When you press update you have to get the product's id obviously.
-change the span into an input.
-get the value out of the input and make sure it's a number not a string.
-change the quantity from whatever it is to that value.
-
-
-add data-product-ids to every button and js classes.
-generate a little html using eventListener.
-use the query selector to get the value out of the input and Number() to change it into a number.
-cartItem.quantity = value;
-and then change it in the html as well.
-
-*/
