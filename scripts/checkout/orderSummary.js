@@ -1,4 +1,10 @@
-import { cart, removeFromCart, updateCartQuantity, updateDeliveryOption } from "../../data/cart.js";
+import {
+  cart,
+  removeFromCart,
+  updateCartQuantity,
+  updateDeliveryOption,
+  updateQuantity,
+} from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { hello } from "https://unpkg.com/supersimpledev@1.0.1/hello.esm.js";
@@ -71,7 +77,8 @@ export function renderOrderSummary() {
                   max="10"
                    class="quantity-input js-quantity-input-${
                      matchingProduct.id
-                   }">
+                   }"
+                   data-product-id="${matchingProduct.id}">
                   <span class="save-quantity-link link-primary 
                   js-save-quantity-link"
                   data-product-id="${matchingProduct.id}"
@@ -136,13 +143,14 @@ ${deliveryOptionsHTML(matchingProduct, cartItem)}
 
   document.querySelectorAll('.js-update-link').forEach((updateLink) => {
 const updatedProduct = updateLink.dataset.productId;
-updateLink.addEventListener('click', () => {
+    updateLink.addEventListener('click', () => {
  document
    .querySelector(`.js-cart-item-container-${updatedProduct}`).classList.add("is-editing-quantity");
-});
+
+    });
   });
 
-document.querySelectorAll(".js-save-quantity-link").forEach((saveLink) => {
+  document.querySelectorAll(".js-save-quantity-link").forEach((saveLink) => {
   const savedProduct = saveLink.dataset.productId;
   saveLink.addEventListener("click", () => {
 const newQuantity = Number(document.querySelector(`.js-quantity-input-${savedProduct}`).value);
@@ -150,9 +158,11 @@ const newQuantity = Number(document.querySelector(`.js-quantity-input-${savedPro
       .querySelector(`.js-cart-item-container-${savedProduct}`).classList.remove("is-editing-quantity");
 
       document.querySelector(`.js-quantity-label-${savedProduct}`).innerText = newQuantity;
+      updateQuantity(savedProduct, newQuantity);
+      renderOrderSummary();
+      renderPaymentSummary();
     });
 });
-
 
   document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {

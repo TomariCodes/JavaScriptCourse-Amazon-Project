@@ -1,14 +1,33 @@
 export let cart;
 
-export function updateCartQuantity(param) {
+export function updateCartQuantity() {
   let cartQuantity = 0;
-console.log(param);
   cart.forEach((cartItem) => {
     cartQuantity += cartItem.quantity;
   });
   document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-  return cartQuantity;
+
+  // = cartQuantity;
 }
+
+export function updateQuantity(productId, newQuantity) {
+
+cart.forEach((cartItem) => {
+if (cartItem.productId === productId) {
+cartItem.quantity = newQuantity
+} else {
+  return;
+}
+saveToStorage();
+
+});
+
+}
+
+
+
+
+
 loadFromStorage();
 
 export function loadFromStorage() {
