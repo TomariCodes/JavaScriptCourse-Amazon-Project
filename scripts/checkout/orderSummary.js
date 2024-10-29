@@ -15,6 +15,7 @@ import {
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
+import { checkoutQuantity } from "./checkout-Interact.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = ``;
@@ -159,6 +160,7 @@ const newQuantity = Number(document.querySelector(`.js-quantity-input-${savedPro
 
       document.querySelector(`.js-quantity-label-${savedProduct}`).innerText = newQuantity;
       updateQuantity(savedProduct, newQuantity);
+      checkoutQuantity();
       renderOrderSummary();
       renderPaymentSummary();
     });
