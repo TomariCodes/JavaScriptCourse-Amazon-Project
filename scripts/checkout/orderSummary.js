@@ -148,7 +148,20 @@ const updatedProduct = updateLink.dataset.productId;
  document
    .querySelector(`.js-cart-item-container-${updatedProduct}`).classList.add("is-editing-quantity");
 
+   document.querySelector('input').addEventListener('keydown', (event) => {
+    if (event.key === "Enter") {
+const newQuantity = Number(document.querySelector('input').value);
+    document
+      .querySelector('input').classList.remove("is-editing-quantity");
+
+      document.querySelector('input').innerText = newQuantity;
+      updateQuantity(updatedProduct, newQuantity);
+      checkoutQuantity();
+      renderOrderSummary();
+      renderPaymentSummary();
+    }
     });
+   });
   });
 
   document.querySelectorAll(".js-save-quantity-link").forEach((saveLink) => {
