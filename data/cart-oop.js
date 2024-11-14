@@ -1,5 +1,5 @@
 function Cart(localStorageKey) {
-  const cart = {
+  let cart = {
     cartItems: undefined,
     loadFromStorage() {
       this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
@@ -70,7 +70,7 @@ function Cart(localStorageKey) {
   return cart;
 }
 
-const cart = Cart('cart-oop');
+let cart = Cart('cart-oop');
 const businessCart = Cart('cart-business');
 
 cart.loadFromStorage();
