@@ -1,7 +1,7 @@
 import { getProduct, loadProductsFetch } from "./products.js";
 import { formatCurrency } from "../scripts/utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
-import { addToCart, cart, setCart, updateCartQuantity } from "./cart.js";
+import { reAddToCart, cart, setCart, updateCartQuantity } from "./cart.js";
 export const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
 await loadProductsFetch();
@@ -128,7 +128,7 @@ function attachBuyAgainListeners() {
       newButton.addEventListener("click", () => {
         const repurchasedProductId = newButton.dataset.productId;
         if (newButton) {
-          addToCart(repurchasedProductId, quantity);
+          reAddToCart(repurchasedProductId, quantity);
           const newCart = renderBuyAgainCart(repurchasedProductId);
           setCart(newCart);
           updateCartQuantity();

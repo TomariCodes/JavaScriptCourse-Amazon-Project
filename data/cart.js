@@ -49,31 +49,90 @@ export function loadFromStorage() {
 function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
+
 export function addToCart(productId, quantitySelector) {
   let matchingItem;
   cart.forEach((cartItem) => {
     if (productId === cartItem.productId) {
       matchingItem = cartItem;
     }
-
-    if (quantitySelector === cartItem.quantity) {
-      cartItem.quantity = cartItem.quantity;
-matchingItem.quantity = cartItem.quantity;
-    }
-
   });
 
   if (matchingItem) {
     matchingItem.quantity += quantitySelector;
-  } else {
+  }
+
+  // if (matchingItem.quantity === undefined) {
+  //  matchingItem.quantity = quantitySelector;
+  //}
+  //console.log(matchingItem.quantity);
+  console.log(quantitySelector);
+  console.log(cart);
+
+  if (!matchingItem) {
     cart.push({
       productId: productId,
       quantity: quantitySelector,
       deliveryOptionId: "1",
     });
-
-
   }
+
+  saveToStorage();
+}
+
+/* 
+  
+  let matchingItem;
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+
+    if (matchingItem) {
+      matchingItem.quantity += quantitySelector;
+       console.log('Added extra quantity');
+      } 
+      else if (!matchingItem) {
+      cart.push({
+        productId: productId,
+        quantity: quantitySelector,
+        deliveryOptionId: "1",
+      });
+      console.log("Working")
+    }});
+
+  saveToStorage();
+}
+
+
+*/
+
+export function reAddToCart(productId, quantitySelector) {
+  let matchingItem;
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+
+    if (cartItem.quantity === "undefined") {
+      cartItem.quantity = quantitySelector;
+    }
+
+    if (matchingItem) {
+      if (quantitySelector === cartItem.quantity) {
+        cartItem.quantity = cartItem.quantity;
+        matchingItem.quantity = cartItem.quantity;
+      } else {
+        matchingItem.quantity += quantitySelector;
+      }
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: quantitySelector,
+        deliveryOptionId: "1",
+      });
+    }
+  });
 
   saveToStorage();
 }

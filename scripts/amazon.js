@@ -65,10 +65,12 @@ function renderProductsGrid() {
   document.querySelector(".js-products-grid").innerHTML = productsHTML;
   document.querySelectorAll(".js-add-to-cart").forEach((button) => {
     button.addEventListener("click", () => {
+      console.log(EventCounts);
       const productId = button.dataset.productId;
 const quantitySelector = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
-      addToCart(productId, quantitySelector);
-      updateCartQuantity(quantitySelector);
+console.log(quantitySelector); 
+addToCart(productId, quantitySelector);
+      updateCartQuantity();
     });
   });
 
