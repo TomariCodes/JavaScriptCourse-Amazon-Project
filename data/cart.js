@@ -120,10 +120,9 @@ export function reAddToCart(productId, quantitySelector) {
 
     if (matchingItem) {
       if (quantitySelector === cartItem.quantity) {
-        cartItem.quantity = cartItem.quantity;
-        matchingItem.quantity = cartItem.quantity;
+        return;
       } else {
-        matchingItem.quantity += quantitySelector;
+        matchingItem.quantity = quantitySelector;
       }
     } else {
       cart.push({
